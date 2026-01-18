@@ -1,1 +1,49 @@
+{
+  "0117_2": [
+    { "name": "AMEENAPUR", "code": "1737026" },
+    { "name": "ILAPUR", "code": "1737025" },
+    { "name": "KRISHTAREDDIPET", "code": "1737007" },
+    { "name": "PATELGUDA", "code": "1737024" },
+    { "name": "RENDLAGADDA", "code": "1737023" },
+    { "name": "SULTANPUR", "code": "1737006" },
+    { "name": "WADAKPALLE", "code": "1737005" }
+  ],
+
+  "0115_1": [
+    { "name": "ABDULLAPUR", "code": "1514034" },
+    { "name": "ANAJPUR", "code": "1514041" },
+    { "name": "BACHARAM", "code": "1514010" },
+    { "name": "BALJAGUDA", "code": "1514015" },
+    { "name": "BANDARAVIRYAL", "code": "1514012" },
+    { "name": "BATASINGARAM", "code": "1514036" },
+    { "name": "DAIRA", "code": "1514011" },
+    { "name": "GOWRELLI", "code": "1514009" },
+    { "name": "GUNTAPALLE", "code": "1514040" },
+    { "name": "HATHIGUDA", "code": "1514003" },
+    { "name": "INAMGUDA", "code": "1514033" },
+    { "name": "INJAPUR", "code": "1514023" },
+    { "name": "KAWADIPALLE", "code": "1514035" },
+    { "name": "KOHEDA", "code": "1514029" },
+    { "name": "KUNTLOOR", "code": "1514018" },
+    { "name": "LASKERGUDA", "code": "1514032" },
+    { "name": "MANNEGUDA", "code": "1514025" },
+    { "name": "MARRIPALLE", "code": "1514006" },
+    { "name": "MAZIDPUR", "code": "1514038" },
+    { "name": "MUNGANOOR", "code": "1514027" },
+    { "name": "OMERKHANDAIRA", "code": "1514030" },
+    { "name": "PASMAMLA", "code": "1514017" },
+    { "name": "PEDDA AMBERPET (KALAN)", "code": "1514028" },
+    { "name": "PIGILIPUR", "code": "1514037" },
+    { "name": "POCHAMPALLE WADA", "code": "1514016" },
+    { "name": "QUTHBULLAPUR", "code": "1514007" },
+    { "name": "SAGARPUMP", "code": "1514039" },
+    { "name": "SURMAIGUDA", "code": "1514031" },
+    { "name": "TATTI ANNARAM", "code": "1514004" },
+    { "name": "TATTI KHANA", "code": "1514005" },
+    { "name": "THARAMATHIPET", "code": "1514014" },
+    { "name": "THIMMAIGUDA", "code": "1514008" },
+    { "name": "TOROOR (FAROOR)", "code": "1514026" },
+    { "name": "TURKAYAMJAL", "code": "1514024" }
+  ]
+}
 
