@@ -1,30 +1,34 @@
 console.log('APP VERSION: REAL JSON INGESTION');
+
 import { useState } from 'react';
 import { SearchSection } from '@/app/components/SearchSection';
 import { ResultsSection, PropertyResult } from '@/app/components/ResultsSection';
 
-// ✅ REAL DATA
-import districts from '@/data/districts.json';
-import mandals from '@/data/mandals.json';
-import villages from '@/data/villages.json';
-import igrsRecords from '@/data/igrsRecords.json';
+// ✅ REAL DATA (CORRECT PATHS)
+import districts from '@/app/data/districts.json';
+import mandals from '@/app/data/mandals.json';
+import villages from '@/app/data/villages.json';
+import igrsRecords from '@/app/data/igrsRecords.json';
 
 /* -------------------------------------------------------
-   BUILD LOCATION DATA FOR SearchSection (EXPECTED SHAPE)
+   BUILD LOCATION DATA (FOR SearchSection UI)
 ------------------------------------------------------- */
 const locationData = {
-  districts: districts.map((d: any) => ({
-    id: d.code,   // REAL districtCode
-    name: d.name, // Display name
+  districts: (districts as any[]).map((d) => ({
+    id: d.code,     // districtCode
+    name: d.name,   // display name
   })),
 
-  mandals: mandals,   // { [districtCode]: [{ code, name }] }
-  villages: villages // { [mandalCode]: [{ code, name }] }
+  // mandals.json → { [districtCode]: [{ code, name }] }
+  mandals: mandals as Record<string, { code: string; name: string }[]>,
+
+  // villages.json → { [mandalCode]: [{ code, name }] }
+  villages: villages as Record<string, { code: string; name: string }[]>,
 };
 
 export default function App() {
   /* ---------------------------------------------------
-     SEARCH STATE (CODES ONLY — MATCH IGRS)
+     SEARCH STATE (CODES ONLY)
   --------------------------------------------------- */
   const [district, setDistrict] = useState('');
   const [mandal, setMandal] = useState('');
@@ -52,39 +56,35 @@ export default function App() {
     setVillage('');
   };
 
-  const handleVillageChange = (value: string) => {
-    setVillage(value);
-  };
-
   /* ---------------------------------------------------
-     REAL SEARCH — IGRS JSON
+     REAL SEARCH (IGRS JSON)
   --------------------------------------------------- */
   const handleSearch = () => {
-    const filtered = (igrsRecords as any[])
+    const filteredResults: PropertyResult[] = (igrsRecords as any[])
       .filter((r) => {
         if (r.districtCode !== district) return false;
         if (r.mandalCode !== mandal) return false;
         if (r.villageCode !== village) return false;
         if (String(r.surveyNo) !== String(surveyNumber)) return false;
 
-        // Plot number is optional
-        if (plotNumber && !String(r.plotNo).includes(plotNumber)) return false;
+        // plot number optional
+        if (plotNumber && String(r.plotNo) !== String(plotNumber)) return false;
 
         return true;
       })
-      .map((r, index): PropertyResult => ({
+      .map((r, index) => ({
         id: `${r.surveyNo}-${index}`,
         surveyNumber: String(r.surveyNo),
         plotNumber: r.plotNo && r.plotNo !== '-' ? String(r.plotNo) : '',
-        status: 'prohibited', // IGRS demo data
+        status: 'prohibited',
         severity: 'high',
         reason: r.reason,
-        authority: r.authority || r.sro,
+        authority: r.sro,
         caseReference: r.caseRef,
         date: r.date,
       }));
 
-    setResults(filtered);
+    setResults(filteredResults);
     setShowResults(true);
   };
 
@@ -93,16 +93,16 @@ export default function App() {
   };
 
   /* ---------------------------------------------------
-     HELPERS (NAMES FOR RESULTS HEADER)
+     DISPLAY NAMES FOR RESULTS HEADER
   --------------------------------------------------- */
   const districtName =
-    districts.find((d: any) => d.code === district)?.name || '';
+    (districts as any[]).find((d) => d.code === district)?.name || '';
 
   const mandalName =
-    mandals[district]?.find((m: any) => m.code === mandal)?.name || '';
+    (mandals as any)[district]?.find((m: any) => m.code === mandal)?.name || '';
 
   const villageName =
-    villages[mandal]?.find((v: any) => v.code === village)?.name || '';
+    (villages as any)[mandal]?.find((v: any) => v.code === village)?.name || '';
 
   /* ---------------------------------------------------
      RENDER
@@ -118,7 +118,7 @@ export default function App() {
           plotNumber={plotNumber}
           onDistrictChange={handleDistrictChange}
           onMandalChange={handleMandalChange}
-          onVillageChange={handleVillageChange}
+          onVillageChange={setVillage}
           onSurveyNumberChange={setSurveyNumber}
           onPlotNumberChange={setPlotNumber}
           onSearch={handleSearch}
