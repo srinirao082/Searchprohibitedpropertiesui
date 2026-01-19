@@ -1,3 +1,4 @@
+console.log('APP VERSION: REAL JSON INGESTION');
 import { useState } from 'react';
 import { SearchSection } from '@/app/components/SearchSection';
 import { ResultsSection, PropertyResult } from '@/app/components/ResultsSection';
