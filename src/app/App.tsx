@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { SearchSection } from '@/app/components/SearchSection';
 import { ResultsSection, PropertyResult } from '@/app/components/ResultsSection';
-import { locationData, generateMockResults, getLocationName } from '@/app/data/mockData';
+import { locationData, getLocationName } from '@/app/data/mockData';
+import igrsRecords from '@/data/igrsRecords.json';
 
 export default function App() {
   // Search state
@@ -28,16 +29,21 @@ export default function App() {
     setVillage('');
   };
 
-  // Handle search
+  // ✅ REAL SEARCH (using IGRS JSON)
   const handleSearch = () => {
-    const mockResults = generateMockResults(
-      surveyNumber,
-      plotNumber,
-      district,
-      mandal,
-      village
-    );
-    setResults(mockResults);
+    const filteredResults = (igrsRecords as PropertyResult[]).filter((r) => {
+      if (r.districtCode !== district) return false;
+      if (r.mandalCode !== mandal) return false;
+      if (r.villageCode !== village) return false;
+      if (String(r.surveyNo) !== String(surveyNumber)) return false;
+
+      // plot number is optional
+      if (plotNumber && !String(r.plotNo).includes(plotNumber)) return false;
+
+      return true;
+    });
+
+    setResults(filteredResults);
     setShowResults(true);
   };
 
